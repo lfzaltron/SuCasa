@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 
 interface PresentationFields {
@@ -83,12 +84,15 @@ function PresentationForm() {
       }
     };
     api.post("/presentations", content).then(() => {
-      alert(JSON.stringify("Success", null, 2));
+      toast.success('Success!');
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }).catch((err) => {
       if (err.response.data.status && err.response.data.message)
-        alert(JSON.stringify(err.response.data.message, null, 2));
+        toast.error(err.response.data.message);
       else
-        alert(JSON.stringify("Oops! Something went wrong!", null, 2));
+        toast.error("Oops! Something went wrong!");
     }).finally(() => setSubmitting(false));
   }
 

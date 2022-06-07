@@ -1,5 +1,6 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 
 interface AttendeeFields {
@@ -45,16 +46,17 @@ function AttendeeForm() {
     return errors;
   }
 
-  function handleSubmit(values: AttendeeFields) {
+  function handleSubmit(values: AttendeeFields, { resetForm }: FormikHelpers<AttendeeFields>) {
     setSubmitting(true);
 
     api.post("/attendees", values).then(() => {
-      alert(JSON.stringify("Success", null, 2));
+      toast.success('Success!');
+      resetForm();
     }).catch((err) => {
       if (err.response.data.status && err.response.data.message)
-        alert(JSON.stringify(err.response.data.message, null, 2));
-      else 
-        alert(JSON.stringify("Oops! Something went wrong!", null, 2));
+        toast.error(err.response.data.message);
+      else
+        toast.error("Oops! Something went wrong!");
     }).finally(() => setSubmitting(false));
   }
 

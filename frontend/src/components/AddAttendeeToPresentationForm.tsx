@@ -1,5 +1,6 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 
 interface AddAttendeeToPresentationFields {
@@ -52,16 +53,17 @@ function AddAttendeeToPresentationForm() {
     return errors;
   }
 
-  function handleSubmit(values: AddAttendeeToPresentationFields) {
+  function handleSubmit(values: AddAttendeeToPresentationFields, { resetForm }: FormikHelpers<AddAttendeeToPresentationFields>) {
     setSubmitting(true);
 
     api.post(`/presentation/${values.presentationId}/attendees`, { email: values.attendeeEmail }).then(() => {
-      alert(JSON.stringify("Success", null, 2));
+      toast.success('Success!');
+      resetForm();
     }).catch((err) => {
       if (err.response.data.status && err.response.data.message)
-        alert(JSON.stringify(err.response.data.message, null, 2));
-      else 
-        alert(JSON.stringify("Oops! Something went wrong!", null, 2));
+        toast.error(err.response.data.message);
+      else
+        toast.error("Oops! Something went wrong!");
     }).finally(() => setSubmitting(false));
   }
 
