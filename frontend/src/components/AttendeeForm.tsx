@@ -62,7 +62,7 @@ function AttendeeForm() {
 
   return (
     <div className='w-full max-w-lg'>
-      <h1 className='text-2xl p-4'>Create Attendee</h1>
+      <h1 className='text-2xl p-4'>Create attendee</h1>
       <Formik
         initialValues={initialValues}
         validate={validateForm}

@@ -98,7 +98,7 @@ function PresentationForm() {
 
   return (
     <div className='w-full max-w-lg'>
-      <h1 className='text-2xl p-4'>Create Presentation</h1>
+      <h1 className='text-2xl p-4'>Create presentation</h1>
       <Formik
         initialValues={initialValues}
         validate={validateForm}

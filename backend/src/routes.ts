@@ -1,5 +1,3 @@
-import { PrismaAttendeesOnPresentationsRepository } from './repositories/prisma/prisma-attendees-on-presentations-repository';
-import { AttendeesOnPresentationsRepository } from './repositories/attendees-on-presentations-repository';
 import express from 'express';
 import { ListPresentationsUseCase } from './use-cases/list-presentations-use-case';
 import { CreateAttendeeUseCase } from './use-cases/create-attendee-use-case';
@@ -8,6 +6,7 @@ import { CreatePresentationUseCase } from './use-cases/create-presentation-use-c
 import { PrismaAttendeesRepository } from './repositories/prisma/prisma-attendees-repository';
 import { PrismaSpeakersRepository } from './repositories/prisma/prisma-speakers-repository';
 import { PrismaPresentationsRepository } from './repositories/prisma/prisma-presentations-repository';
+import { PrismaAttendeesOnPresentationsRepository } from './repositories/prisma/prisma-attendees-on-presentations-repository';
 
 export const routes = express.Router();
 
