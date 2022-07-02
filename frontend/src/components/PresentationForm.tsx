@@ -1,6 +1,7 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { usePresentations } from '../Presentations';
 import api from '../services/api';
 
 interface PresentationFields {
@@ -24,6 +25,7 @@ interface FieldErrors {
 }
 
 function PresentationForm() {
+  const {presentationsChanged} = usePresentations();
   const [isSubmitting, setSubmitting] = useState(false);
   const [isValid, setValid] = useState(true);
 
@@ -69,7 +71,7 @@ function PresentationForm() {
     return errors;
   }
 
-  function handleSubmit(values: PresentationFields) {
+  function handleSubmit(values: PresentationFields, { resetForm }: FormikHelpers<PresentationFields>) {
     setSubmitting(true);
 
     const content = {
@@ -85,9 +87,8 @@ function PresentationForm() {
     };
     api.post("/presentations", content).then(() => {
       toast.success('Success!');
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      resetForm();
+      presentationsChanged();
     }).catch((err) => {
       if (err.response.data.status && err.response.data.message)
         toast.error(err.response.data.message);

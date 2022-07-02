@@ -1,6 +1,7 @@
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { usePresentations } from '../Presentations';
 import api from '../services/api';
 
 interface AddAttendeeToPresentationFields {
@@ -13,22 +14,10 @@ interface FieldErrors {
   attendeeEmail?: string;
 }
 
-interface Presentation {
-  id: number;
-  presentation: string;
-}
-
-
 function AddAttendeeToPresentationForm() {
+  const { presentations } = usePresentations();
   const [isSubmitting, setSubmitting] = useState(false);
   const [isValid, setValid] = useState(true);
-  const [presentations, setPresentations] = useState<Presentation[]>([]);
-
-  useEffect(() => {
-    api.get('/presentations').then(response => {
-      setPresentations(response.data);
-    });
-  }, []);
 
   const initialValues: AddAttendeeToPresentationFields = {
     presentationId: 0,
